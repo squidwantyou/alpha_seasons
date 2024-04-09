@@ -4,20 +4,56 @@ import time
 import sys,os
 import random
 
-start = int(sys.argv[1])
+username = "Want_You"
+password = "yzyhlzj"
+
+username = "dog north south"
+password = "Cao1meng"
+
 LIMIT = 200
-
 s = requests.Session()
+headers =  {
+    "accept": "*/*",
+    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7,zh-TW;q=0.6,lb;q=0.5",
+    "sec-ch-ua": "\"Chromium\";v=\"112\", \"Google Chrome\";v=\"112\", \"Not:A-Brand\";v=\"99\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "Origin": "https://zh-cn.boardgamearena.com",
+    "Referer":"https://zh-cn.boardgamearena.com/account",
+    "referrerPolicy": "strict-origin-when-cross-origin",
+    "body": "",
+    "method": "GET",
+    "mode": "cors",
+    "credentials": "include",
+}
 
-neid = sys.argv[2] # "Opwm2hxYefWNRqL"
-netk = sys.argv[3] # "K2B2yQsk0tLaGep1Qz1Y8Scdh1pX84anFNi1vIspVt7oN9gubcz6hgj25mXJprG4"
+r = s.post( "https://zh-cn.boardgamearena.com/account", headers = headers )
+tmp = r.content.decode("utf8")
+request_token = False
+for line in tmp.split("\n"):
+    if "requestToken" in line:
+        request_token = line.split('\'')[1]
+        if request_token:
+            break
 
-#cookies = requests.cookies.RequestsCookieJar()
-#cookies.set("TournoiEnLigneid","GV87DPsbvz6hP8B")
-#cookies.set("TournoiEnLignetk","drRzkrUKuXstEa9U8wl0PGySF2ySDmMXf1ru8dl50KsuYvav6nZQjfF4OkAZRvoO")
-s.cookies.set("TournoiEnLigneid",neid,domain=".boardgamearena.com")
-s.cookies.set("TournoiEnLignetk",netk,domain=".boardgamearena.com")
+data = {
+    "email": username,
+    "password": password,
+    "rememberme": "on",
+    "redirect": "join",
+    "request_token": request_token,
+    "form_id": "loginform",
+    "dojo.preventCache": str(int(time.time())),
+}
 
+url = "https://zh-cn.boardgamearena.com/account/account/login.html"
+r = s.post(url, headers=headers, data=data)
+tmp = r.content
+
+neid = s.cookies.get("TournoiEnLigneid")
 headers =  {
     "accept": "*/*",
     "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7,zh-TW;q=0.6,lb;q=0.5",
@@ -28,7 +64,6 @@ headers =  {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "x-request-token": neid,
-    # "x-request-token": "x1bXyQxUJAGm8AC",
     "x-requested-with": "XMLHttpRequest",
     "referrer": "https://boardgamearena.com",
     "referrerPolicy": "strict-origin-when-cross-origin",
@@ -38,27 +73,25 @@ headers =  {
     "credentials": "include",
 }
 
-url =  f"https://boardgamearena.com/gamereview?table=366498894"
-r = s.get(url, headers = headers )
-
 os.system("mkdir game_log")
 
 i = 0 
 count = 0 
 for line in open("table_id.list") :
-    i += 1
-    if i<= start:
+    inid = line.strip()
+
+    if os.path.isfile(f"game_log/{inid}.json"):
         continue
+    else:
+        pass
+
+    i += 1
     if count == LIMIT:
         break
     count += 1
 
-    inid = line.strip()
-    # inid = "366477213"
-
     url = f"https://boardgamearena.com/gamereview/gamereview/requestTableArchive.html?table={inid}&dojo.preventCache={int(time.time())}"
     r = s.get(url, headers = headers )
-#    print(r.headers)
     b = r.text
     time.sleep( random.random() )
 
@@ -69,10 +102,11 @@ for line in open("table_id.list") :
     with open(f"game_log/{inid}.json",'w') as ofp:
         ofp.write(r.text)
 
-    print(i,inid)
-    print(url)
+    statue = True
+    if os.path.getsize(f"game_log/{inid}.json") < 200:
+        os.system(f"rm game_log/{inid}.json")
+        statue = False
+
+    print(i,inid,statue)
     time.sleep( random.random() )
-
-    
-
 

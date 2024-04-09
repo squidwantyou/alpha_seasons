@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import requests
 
+neid = "EY1dk77B6i2e3Lm"
+netk = "CtUa7sNKuEmAFpUKn5Y87p90uTVQtP8KTGwLFVT17jxwa6rlZUXBjO7BJxZkcQK3"
+
 cookies = requests.cookies.RequestsCookieJar()
-cookies.set("TournoiEnLigneid","GV87DPsbvz6hP8B")
-cookies.set("TournoiEnLignetk","drRzkrUKuXstEa9U8wl0PGySF2ySDmMXf1ru8dl50KsuYvav6nZQjfF4OkAZRvoO")
-
-url = "https://boardgamearena.com/gamestats/gamestats/getGames.html?player=84727173&opponent_id=0&game_id=30&finished=0&page=2&updateStats=0"
-
+cookies.set("TournoiEnLigneid",neid)
+cookies.set("TournoiEnLignetk",netk)
 
 headers =  {
     "accept": "*/*",
@@ -17,9 +17,9 @@ headers =  {
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
-    "x-request-token": "GV87DPsbvz6hP8B",
+    "x-request-token": neid,
     "x-requested-with": "XMLHttpRequest",
-    "referrer": "https://boardgamearena.com/gamestats?player=94020171&opponent_id=85255171&finished=0",
+    "referrer": "https://boardgamearena.com/gamestats?player=92017275&finished=0",
     "referrerPolicy": "strict-origin-when-cross-origin",
     "body": "",
     "method": "GET",
@@ -27,23 +27,19 @@ headers =  {
     "credentials": "include",
 }
 
-
 i = 1 
 while True:
     if i == 1:
         j = 1
     else :
         j = 0 
-    turl = f"https://boardgamearena.com/gamestats/gamestats/getGames.html?player=84727173&opponent_id=0&game_id=30&finished=0&page={i}&updateStats={j}"
+    turl = f"https://boardgamearena.com/gamestats/gamestats/getGames.html?player=92017275&opponent_id=0&game_id=30&finished=0&page={i}&updateStats={j}"
     r = requests.get(turl,cookies=cookies, headers = headers )
     with open(f"{i}.json",'w') as ofp:
         ofp.write(r.text)
     print(i,turl)
-    if i == 438:
+    if i == 500:
         break
     i += 1
-
-
-
 
 

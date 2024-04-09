@@ -163,4 +163,8 @@ game_log/
 games/
 *.xlsx
 *.csv
+accounts
+__pycache__
+table_id.list
+tmp
 
