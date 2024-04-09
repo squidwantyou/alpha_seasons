@@ -4,11 +4,6 @@ import time
 import sys,os
 import random
 
-username = "Want_You"
-password = "yzyhlzj"
-
-username = "dog north south"
-password = "Cao1meng"
 
 LIMIT = 200
 s = requests.Session()
