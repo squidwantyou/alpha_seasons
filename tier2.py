@@ -11,43 +11,41 @@ for key in all_cards:
 infile = sys.argv[1]
 
 for line in open(infile):
-    items = line.split(",")
-    mlist = items[19:27]
-    ylist = items[27:35]
+    try:
+        items = line.strip().split("\t")
+        game_id = items[0] 
+        mlist = items[1:10]
+        ylist = items[10:19]
+        result = items[19]
 
-    mhand = items[1:10]
-    yhand = items[10:19]
+        all_values[ mlist[0] ] += 8 + 10
+        all_values[ mlist[1] ] += 7 + 5
+        all_values[ mlist[2] ] += 5
+        all_values[ mlist[3] ] += 4
+        all_values[ mlist[4] ] += 2
+        all_values[ mlist[5] ] += 1
+        all_values[ mlist[6] ] += -1
+        all_values[ mlist[7] ] += -2
+        all_values[ mlist[8] ] += -4
 
-    for i in range(8):
-        choice = mlist[i]
-        failed = list()
-        if i%2 == 0:
-            a = mhand[:]
-            for j in range(i):
-                if j%2==0:
-                    a.remove( mlist[j] )
-                else:
-                    a.remove( ylist[j] )
-        else:
-            a = yhand[:]
-            for j in range(i):
-                if j%2==0:
-                    a.remove( ylist[j] )
-                else:
-                    a.remove( mlist[j] )
-        
-        a.remove(choice)
-        all_values[choice] += len(a)
-        if len(a) == 8:
-            all_values[choice] += 10
-        if len(a) == 7:
-            all_values[choice] += 5
-
-        for tmp in a:
-            all_values[tmp] += -1
+        all_values[ ylist[1] ] += -1
+        all_values[ ylist[2] ] += -1
+        all_values[ ylist[3] ] += -2
+        all_values[ ylist[4] ] += -2
+        all_values[ ylist[5] ] += -3
+        all_values[ ylist[6] ] += -3
+        all_values[ ylist[7] ] += -4
+        all_values[ ylist[8] ] += -4
+    except:
+        pass
+    
 
 sorted_keys = sorted( all_cards, key = lambda x:all_values[x], reverse = True )
 
+total = sum( all_values.values() )
+count = len( all_cards )
+scale = total*1.0/count
+
 for key in sorted_keys:
-    print(all_values[key],"\t",key)
+    print("%5.2f\t%s"%(all_values[key]/scale,key))
 

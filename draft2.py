@@ -99,3 +99,15 @@ for key in sorted_key:
     print(f"{count[key]}\t{c_win[key]}\t{100.0*c_win[key]/count[key]:6.2f}%\t{key}")
 
 
+with open("draft_output.csv",'w') as ofp:
+    for game_id,ming_hand,yeguai_hand,result in all_draft:
+        ofp.write(game_id)
+        ofp.write("\t")
+        ofp.write("\t".join(ming_hand) )
+        ofp.write("\t")
+        ofp.write("\t".join(yeguai_hand) )
+        ofp.write("\t")
+        ofp.write(result)
+        ofp.write("\n")
+    
+
