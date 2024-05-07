@@ -169,4 +169,5 @@ table_id.list
 tmp
 chenymandy_1600/
 downloaded_data/
-
+*.input
+nohup.out

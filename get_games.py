@@ -5,8 +5,8 @@ import time
 import random as rd
 
 lines = open("accounts").readlines()
-username = lines[0].strip()
-password = lines[1].strip()
+username = lines[2].strip()
+password = lines[3].strip()
 
 # 
 player_id = sys.argv[1] 

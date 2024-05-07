@@ -74,40 +74,15 @@ for infile in all_jsons:
     except Exception as e:
         print(e)
         
-count = dict()
-c_win = dict()
-c_lose = dict()
-for game_id,ming_hand,yeguai_hand,result in all_draft:
-    tmp = ming_hand[0] 
-    if tmp in count:
-        count[tmp] += 1
-    else:
-        count[tmp] = 1
-    if tmp not in c_win:
-        c_win[tmp] = 0
-        c_lose[tmp] = 0
-    if result  == 'Win':
-        c_win[tmp] += 1
-    else: 
-        c_lose[tmp] += 1
-
-sorted_key = sorted( count.keys(), key=lambda x:count[x], reverse=True)
-print(f"Total\tWin\tWin_Rate\tCard_Name")
-for key in sorted_key:
-    if key not in c_win:
-        c_win[key] = 0
-    print(f"{count[key]}\t{c_win[key]}\t{100.0*c_win[key]/count[key]:6.2f}%\t{key}")
-
 
 with open("draft_output.csv",'w') as ofp:
     for game_id,ming_hand,yeguai_hand,result in all_draft:
         ofp.write(game_id)
         ofp.write("\t")
-        ofp.write("\t".join(ming_hand) )
+        ofp.write("\t".join(ming_hand[:9]) )
         ofp.write("\t")
-        ofp.write("\t".join(yeguai_hand) )
+        ofp.write("\t".join(yeguai_hand[:9]) )
         ofp.write("\t")
-        ofp.write(result)
+        ofp.write(str(result))
         ofp.write("\n")
-    
 

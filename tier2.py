@@ -47,5 +47,8 @@ count = len( all_cards )
 scale = total*1.0/count
 
 for key in sorted_keys:
-    print("%5.2f\t%s"%(all_values[key]/scale,key))
+    try:
+        print("%5.2f\t%s"%(all_values[key]/scale,key))
+    except:
+        print("%5.2f\t%s"%(0,key))
 
