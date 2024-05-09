@@ -4,7 +4,7 @@ import flib
 
 query = sys.argv[1]
 
-with open(f"{query}.input","w") as ofp:
+with open(f"input/{query}.input","w") as ofp:
     i = flib.get_id(query)
     ofp.write(str(i))
     ofp.write("\n")

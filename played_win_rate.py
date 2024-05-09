@@ -8,8 +8,9 @@ all_played = list()
 for line in open("played_cards.csv"):
     items = line.strip().split("\t")
     try:
-        result = items[0]
-        played_cards = items[1:]
+        game_id = items[0]
+        result = items[1]
+        played_cards = items[2:]
         all_played.append( (result,played_cards) )
     except:
         pass
