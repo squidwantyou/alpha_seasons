@@ -7,8 +7,13 @@ import glob
 all_jsons = glob.glob("game_log/*.json")
 all_draft = dict()
 
-player_name = sys.argv[1] # "chenymandy"
-player_id = sys.argv[2] # "92017275"
+if os.path.isfile(sys.argv[1]):
+    lines = open(sys.argv[1]).readlines()
+    player_name = lines[1].strip()
+    player_id = lines[0].strip()
+else:
+    player_name = sys.argv[1] # "chenymandy"
+    player_id = sys.argv[2] # "92017275"
 
 all_draft = list()
 for infile in all_jsons:

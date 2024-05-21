@@ -81,12 +81,18 @@ headers =  {
 }
 
 i = 1 
+print("waiting...")
+time.sleep(5)
+print("go")
 while True:
     if i == 1:
         j = 1
     else :
         j = 0 
-    turl = f"https://boardgamearena.com/gamestats/gamestats/getGames.html?player={player_id}&opponent_id=0&game_id=30&finished=0&page={i}&updateStats={j}"
+    if i == 1:
+        turl = f"https://boardgamearena.com/gamestats/gamestats/getGames.html?player={player_id}&opponent_id=0&game_id=30&finished=0&updateStats={j}&dojo.preventCache={int(time.time())}"
+    else:
+        turl = f"https://boardgamearena.com/gamestats/gamestats/getGames.html?player={player_id}&opponent_id=0&game_id=30&finished=0&page={i}&updateStats={j}&dojo.preventCache={int(time.time())}"
     r = s.get(turl,headers = headers )
     with open(f"games/{i}.json",'w') as ofp:
         ofp.write(r.text)

@@ -4,14 +4,15 @@ import glob
 import matplotlib.pyplot as plt
 import numpy as np
 
-files = glob.glob("*/tier.csv")
+files = glob.glob("*/kept.csv")
+files.sort()
 
 players = [ x.split("/")[0] for x in files ]
-players.sort()
+
 
 all_seq = dict()
 for p,f in zip(players,files):
-    lines = open(f).readlines()[:]
+    lines = open(f).readlines()[1:]
     seq = [ x.strip().split("\t")[1] for x in lines ]
     all_seq[p] = seq
 
@@ -33,6 +34,7 @@ for i in range(len(players)):
     print("%12s"%players[i][:11],end='')
 print('\n')
     
+
 for i in range(len(players)):
     print("%20s"%players[i],end = '')
     for j in range(len(players)):

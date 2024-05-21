@@ -9,6 +9,6 @@ for line in open("accounts"):
         username = line.strip()
     if i%2 == 1:
         password = line.strip()
-        os.system(f"python get_game_log.py '{username}' '{password}'")
+        os.system(f"python scripts/get_game_log.py '{username}' '{password}'")
     i += 1
         
