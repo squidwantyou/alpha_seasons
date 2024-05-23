@@ -172,3 +172,5 @@ downloaded_data/
 *.input
 nohup.out
 models
+housekeeping_download/*/
+housekeeping_download/accounts

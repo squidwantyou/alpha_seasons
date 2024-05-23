@@ -50,14 +50,14 @@ for infile in all_jsons:
             if log["channel"] == f"/player/p{player_id}":
                 for action in log["data"]:
                     if action["type"] == "pickPowerCard":
-                        card = log["data"][0]["args"]["card"]["type"]
+                        card = action["args"]["card"]["type"]
                         ming_hand.append(cards.name[card])
                     elif action["type"] == "discard":
                         ming_hand.pop()
             elif "/player/p" in log["channel"] :
                 for action in log["data"]:
                     if action["type"] == "pickPowerCard":
-                        card = log["data"][0]["args"]["card"]["type"]
+                        card = action["args"]["card"]["type"]
                         yeguai_hand.append(cards.name[card])
                     elif action["type"] == "discard":
                         yeguai_hand.pop()
